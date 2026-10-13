@@ -1,0 +1,11 @@
+numpy
+scipy
+wfdb
+pandas
+scikit-learn
+matplotlib
+flask
+# torch/torchvision 需 CUDA 版：
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+torch
+torchvision

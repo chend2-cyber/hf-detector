@@ -1,0 +1,2 @@
+model,best_epoch,val_auc
+bilstm,8,0.9680

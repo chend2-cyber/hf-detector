@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>检测结果</title>
+  <style>
+    body { font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; max-width: 860px; margin: 40px auto; padding: 0 16px; color: #222; }
+    h1 { font-size: 22px; }
+    .verdict { font-size: 26px; font-weight: 700; padding: 16px 20px; border-radius: 10px; text-align: center; margin: 16px 0; }
+    .chf { background: #fdecea; color: #c0392b; }
+    .normal { background: #eafaf0; color: #1e8449; }
+    .card { border: 1px solid #e3e3e3; border-radius: 10px; padding: 16px; margin-top: 16px; }
+    .stat { font-size: 15px; color: #444; line-height: 1.9; }
+    img { max-width: 100%; border: 1px solid #eee; border-radius: 8px; margin-top: 10px; }
+    a { color: #2b6cb0; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>💓 检测结果</h1>
+  <div class="verdict {{ 'chf' if label == 1 else 'normal' }}">
+    判定：{{ label_name }}　|　心衰概率 {{ "%.3f"|format(mean_p) }}
+  </div>
+  <div class="card stat">
+    使用模型：<b>{{ model }}</b><br>
+    切片数：{{ n }} 段<br>
+    片段概率：min={{ "%.3f"|format(pmin) }}　max={{ "%.3f"|format(pmax) }}　mean={{ "%.3f"|format(mean_p) }}
+  </div>
+  <div class="card">
+    <div>ECG 波形</div>
+    <img src="data:image/png;base64,{{ wave_png }}" alt="ECG 波形">
+  </div>
+  <div class="card">
+    <div>各片段概率分布</div>
+    <img src="data:image/png;base64,{{ dist_png }}" alt="概率分布">
+  </div>
+  <p><a href="{{ url_for('index') }}">← 再测一条</a>　|　<a href="{{ url_for('history') }}">历史记录 →</a></p>
+</body>
+</html>

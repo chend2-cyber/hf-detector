@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>心衰检测系统</title>
+  <style>
+    body { font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; color: #222; }
+    h1 { font-size: 22px; }
+    .card { border: 1px solid #e3e3e3; border-radius: 10px; padding: 20px; margin-top: 20px; }
+    .info { color: #555; font-size: 14px; line-height: 1.7; }
+    input[type=file] { margin: 12px 0; display: block; }
+    button { background: #2b6cb0; color: #fff; border: 0; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 15px; }
+    button:hover { background: #235a96; }
+    .msg { background: #fff3cd; color: #7a5c00; padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <h1>💓 基于深度学习的心衰检测系统</h1>
+  <div class="card">
+    <div class="info">
+      当前模型：<b>{{ model }}</b><br>
+      验证集 AUC：<b>{{ "%.4f"|format(val_auc) }}</b><br>
+      测试集 AUC：<b>{% if test_auc is not none %}{{ "%.4f"|format(test_auc) }}{% else %}—{% endif %}</b>
+    </div>
+    {% with msgs = get_flashed_messages() %}
+      {% if msgs %}{% for m in msgs %}<div class="msg">{{ m }}</div>{% endfor %}{% endif %}
+    {% endwith %}
+    <form method="post" action="{{ url_for('predict') }}" enctype="multipart/form-data">
+      <label>上传 ECG 记录（同时选 <b>.hea</b> 和 <b>.dat</b> 两个文件）：</label>
+      <input type="file" name="files" accept=".hea,.dat" multiple required>
+      <button type="submit">开始检测</button>
+    </form>
+  </div>
+</body>
+</html>
